@@ -1,109 +1,146 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", Arial, Helvetica, sans-serif;
-  border: 0px red solid;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 
 body {
-  min-height: 99vh;
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  background: #111111;
-  overflow: hidden;
-  padding: 30px 0;
+    min-height: 100vh;
+    justify-content: center;
+    background: #111111;
 }
 
 main {
-  display: flex;
-  width: 1600px;
-  height: 99vh;
+    width: 100%;
+    margin: 0;
+    display: flex;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    height: 100vh;
+    padding: 30px;
+}
+
+.left p {
+    color: #bbbbbb;
+    font-weight: 300;
+    height: 100%;
+    padding: 0 150px;
+}
+
+.first {
+    font-size: 3em;
+    font-family: 'Playfair Display', Arial, Helvetica, sans-serif;
+}
+
+.last {
+    font-weight: 100;
+    font-size: 2.4em;
 }
 
 .name {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.name h1 {
-  font-size: 3.5em;
-  font-family: "Playfair Display", Arial, Helvetica, sans-serif;
-}
-.name .first {
-  color: #f5f5f5;
-}
-.name .line {
-  width: 100px;
-  height: 3px;
-  background: #9A151D;
-}
-.name .last {
-  color: #f5f5f5;
-  font-family: "Poppins";
-  font-weight: 300;
-  font-size: 2.7em;
-}
-
-.about {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.about .img-container {
-  margin: 30px;
-  z-index: -1;
-  min-width: 200px;
-  min-height: 200px;
-  overflow: hidden;
-  border-radius: 50%;
-  background-image: url(images/IMG-826bcc24993459eb0976cbedf641fe38-V.jpg);
-  background-position: center;
-  background-size: cover;
-}
-.about p {
-  color: #bbbbbb;
-  padding: 0 60px;
-  font-weight: 300;
-}
-
-.works {
-  width: 50%;
-  height: 880px;
-  padding-top: 30px;
-  padding-bottom: 60px;
-}
-.works .container {
-  width: 100%;
-  border-radius: 0.6em;
-  height: 100%;
-  overflow: hidden;
-}
-.works .container .content {
-  display: flex;
-  height: 100%;
-  gap: 10px;
-  animation: scroll infinite linear 45s;
-}
-
-@keyframes scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-4710px);
-  }
-}
-@media (max-width: 1838px) {
-  main {
+    text-align: center;
+    display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  body {
-    overflow-y: scroll;
-  }
-}/*# sourceMappingURL=style.css.map */
+}
+
+.name h1 {
+    color: #f5f5f5;
+}
+
+.line {
+    width: 100px;
+    height: 3px;
+    margin-top: 10px;
+    background: #9A151D;
+}
+
+.pfp {
+    margin: 30px 0;
+    min-height: 250px;
+    min-width: 250px;
+    border-radius: 50%;
+    background-image: url(images/IMG-826bcc24993459eb0976cbedf641fe38-V.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.right {
+    width: 50%;
+    padding: 30px;
+    height: 100vh;
+}
+
+.right .container {
+    height: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+    border-radius: .6em;
+}
+
+.right .container .content {
+    display: flex;
+    height: 100%;
+    gap: 10px;
+}
+
+footer {
+    background-color: #0e0e0e;
+    box-shadow: 0 0 20px rgba(0,0,0,50%);
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f5f5f5;
+    font-weight: 200;
+}
+
+@media (max-width: 1910px) {
+    .left p {
+        padding: 0;
+    }
+}
+
+@media (max-width: 1603px) {
+    .pfp {
+        min-width: 150px;
+        min-height: 150px;
+    }
+    .first {
+        font-size: 2.2em;
+    }
+    .last {
+        font-size: 1.76em;
+    }
+}
+
+@media (max-width: 1264px) {
+    main {
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .left {
+        height: 100%;
+        width: 100%;
+    }
+    .right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1264px) {
+    footer {
+        font-size: .7em;
+    }
+}
