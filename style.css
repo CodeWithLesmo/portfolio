@@ -10,8 +10,10 @@
 
 body {
     min-height: 100vh;
-    justify-content: center;
+    justify-content: space-between;
     background: #111111;
+    display: flex;
+    flex-direction: column;
 }
 
 main {
@@ -25,15 +27,16 @@ main {
     flex-direction: column;
     align-items: center;
     width: 50%;
-    height: 100vh;
+    height: auto;
     padding: 30px;
+    transition: 200ms;
 }
 
 .left p {
     color: #bbbbbb;
     font-weight: 300;
     height: 100%;
-    padding: 0 150px;
+    width: 40em;
 }
 
 .first {
@@ -78,7 +81,8 @@ main {
 .right {
     width: 50%;
     padding: 30px;
-    height: 100vh;
+    height: 60em;
+    opacity: 1;
 }
 
 .right .container {
@@ -111,7 +115,31 @@ footer {
     }
 }
 
-@media (max-width: 1603px) {
+@media (min-width: 1420px) {
+    .right {
+        animation: switch-min 1000ms ease;
+    }
+}
+
+@media (max-width: 1419px) {
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+    .left {
+        height: 100%;
+        width: 100%;
+        
+    }
+    .left p {
+        width: auto;
+        padding: 0 50px;
+    }    
+    .right {
+        width: 100%;
+        animation: switch-max 1000ms ease;
+    }
+
     .pfp {
         min-width: 150px;
         min-height: 150px;
@@ -125,22 +153,31 @@ footer {
 }
 
 @media (max-width: 1264px) {
-    main {
-        display: flex;
-        flex-direction: column;
-        
-    }
-    .left {
-        height: 100%;
-        width: 100%;
-    }
-    .right {
-        width: 100%;
+    footer {
+        font-size: .7em;
     }
 }
 
-@media (max-width: 1264px) {
-    footer {
-        font-size: .7em;
+@media (max-width: 730px) {
+    .left p {
+        width: auto;
+    }
+}
+
+@keyframes switch-max {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes switch-min {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
