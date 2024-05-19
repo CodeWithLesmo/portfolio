@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: Poppins, sans-serif;
+      font-weight: 500;
+    }
+
+    body {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+    }
+
+    .main_body {
+      margin: auto;
+      height: 100%;
+      width: 100%;
+      padding: 10px;
+    }
+
+    #history {
+      width: 100%;
+      height: 74.5%;
+      margin-bottom: 5px;
+      border: 1px black solid;
+      border-radius: 0.2em;
+      padding: 5px 10px;
+      display: flex;
+      flex-direction: column-reverse;
+      overflow-y: auto;
+      cursor: default;
+    }
+
+    .history-item {
+      background-color: transparent;
+      border-radius: 0.25em;
+      width: auto;
+      color: black;
+      margin-bottom: 5px;
+      padding: 15px;
+      font-size: 1em;
+      text-align: right;
+      border: 1px black solid;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.3s ease;
+    }
+
+    .history-item:hover {
+      background-color: black;
+      color: white;
+      transform: scale(0.97);
+    }
+
+    #input {
+      width: 100%;
+      min-height: 50px;
+      margin-bottom: 5px;
+      font-size: 1.5em;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: 1px black solid;
+      color: black;
+      border-radius: 0.15em;
+      text-align: right;
+      letter-spacing: 2%;
+    }
+
+    #input::placeholder {
+      color: #c2c2c2;
+      font-weight: 600;
+    }
+
+    #input:focus {
+      outline: none;
+    }
+
+    #preview {
+      width: 100%;
+      min-height: 50px;
+      margin-bottom: 5px;
+      font-size: 1.25em;
+      border: 1px black solid;
+      border-radius: 0.15em;
+      padding: 10px 20px;
+      text-align: right;
+    }
+
+    .buttons {
+      cursor: default;
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      gap: 5px;
+    }
+
+    #equal,
+    #clear {
+      width: 100%;
+      border: none;
+      font-size: 1.25em;
+      font-weight: 500;
+      color: white;
+      background-color: black;
+      border-radius: 0.15em;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="main_body">
+    <div id="history"></div>
+    <input id="input" type="text" placeholder="Enter a number">
+    <div id="preview"></div>
+    <div class="buttons">
+      <button id="clear">C</button>
+      <button id="equal">=</button>
+    </div>
+  </section>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const input = document.getElementById("input");
+      const preview = document.getElementById("preview");
+      const historyDiv = document.getElementById("history");
+      const clearBtn = document.getElementById("clear");
+      const equalBtn = document.getElementById("equal");
+
+      let history = JSON.parse(localStorage.getItem("calculatorHistory")) || [];
+
+      // Function to evaluate expression and update preview
+      const evaluateExpression = () => {
+        const expression = input.value;
+        try {
+          const result = eval(expression);
+          if (Number.isNaN(result)) {
+            preview.textContent = "";
+          } else {
+            preview.textContent = result;
+          }
+        } catch (error) {
+          preview.textContent = "";
+        }
+      };
+
+      // Function to update history and localStorage
+      const updateHistory = () => {
+        if (input.value.trim() !== "") { // Check if input value is not empty
+          history.push(input.value);
+          localStorage.setItem("calculatorHistory", JSON.stringify(history));
+          renderHistory();
+        }
+      };
+
+      // Function to render history
+      const renderHistory = () => {
+        historyDiv.innerHTML = "";
+        history.forEach(item => {
+          const result = eval(item); // Evaluate the expression to get the result
+          const historyItem = document.createElement("div");
+          historyItem.textContent = result;
+          historyItem.classList.add("history-item");
+          historyItem.addEventListener("click", () => {
+            input.value += result;
+            evaluateExpression();
+            input.focus(); // Focus back on the input field
+          });
+          historyDiv.prepend(historyItem);
+        });
+      };
+
+      // Function to handle clear button click
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        preview.textContent = "";
+        input.focus(); // Focus back on the input field
+      });
+
+      // Function to handle equal button click
+      equalBtn.addEventListener("click", () => {
+        if (input.value.trim() !== "") { // Check if input value is not empty
+          evaluateExpression(); // Update preview with the result
+          updateHistory(); // Update history
+        }
+        input.value = "";
+        preview.textContent = "";
+        input.focus(); // Focus back on the input field
+      });
+
+      // Event listener for input changes
+      input.addEventListener("input", evaluateExpression);
+
+      // Event listener for Enter key
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+          if (input.value.trim() !== "") { // Check if input value is not empty
+            evaluateExpression(); // Update preview with the result
+            updateHistory(); // Update history
+          }
+          input.value = "";
+          preview.textContent = "";
+          input.focus(); // Focus back on the input field
+        }
+      });
+
+      // Event listener for Delete key
+      input.addEventListener("keydown", event => {
+        if (event.key === "Delete") {
+          input.value = "";
+          preview.textContent = "";
+          input.focus(); // Focus back on the input field
+        }
+      });
+
+      // Event listener for Shift + H to clear history
+      document.addEventListener("keydown", event => {
+        if (event.shiftKey && event.key === "H") {
+          localStorage.removeItem("calculatorHistory");
+          history = [];
+          renderHistory();
+          input.focus(); // Focus back on the input field
+        }
+      });
+
+      // Render initial history
+      renderHistory();
+    });
+  </script>
+</body>
+
+</html>
